@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useRef, useState, useEffect } from "react";
 import { useGLTF, useAnimations, Html } from "@react-three/drei";
 import * as THREE from "three";

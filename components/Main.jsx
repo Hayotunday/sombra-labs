@@ -23,7 +23,7 @@ import LastSection from "./sections/LastSection";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const  Main = () => {
+const Main = () => {
   const { step, introDone } = useStateStore();
   const { currentModel, setCurrentModel } = useModelStore();
   const { activePopup } = useCaseStudyStore();

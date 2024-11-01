@@ -9,10 +9,14 @@ export function DiamondModel(props) {
   return (
     <group scale={5} ref={group} {...props} dispose={null}>
       <mesh
+        castShadow
+        receiveShadow
         geometry={nodes.Stelated_Dodecahedron002.geometry}
         material={materials['Website  Glass Material']}
       />
       <mesh
+        castShadow
+        receiveShadow
         geometry={nodes['3D_S001'].geometry}
         material={materials['S Black']}
         position={[0.015, 0.017, 0]}
