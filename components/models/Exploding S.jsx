@@ -53,27 +53,6 @@ export function ExplodeS({ ...props }) {
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   const stepRef = useRef(step);
-  const prevScrollPos = window.scrollY;
-
-  const scrollToStudies = () => {
-    const case_studies = document.getElementById("case_studies");
-    case_studies.click();
-  };
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollPos = window.scrollY;
-      const direction = currentScrollPos > prevScrollPos ? "down" : "up";
-
-      if (direction == "up") {
-        scrollToStudies();
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   useEffect(() => {
     stepRef.current = step;

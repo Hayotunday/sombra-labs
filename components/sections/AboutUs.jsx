@@ -1,37 +1,9 @@
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { aboutData as data } from "@/data/case-studies";
 
 const AboutUs = () => {
   const [activeSlide, setActiveSlide] = useState(0);
-
-  // const prevScrollPos = window.scrollY;
-
-  // const scrollToStudies = () => {
-  //   const case_studies = document.getElementById("case_studies");
-  //   case_studies.click();
-  // };
-  // const scrollToTalk = () => {
-  //   const talk_to_us = document.getElementById("talk_to_us");
-  //   talk_to_us.click();
-  // };
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     const currentScrollPos = window.scrollY;
-  //     const direction = currentScrollPos > prevScrollPos ? "down" : "up";
-
-  //     if (direction == "up") {
-  //       scrollToTalk();
-  //     } else if (direction == "down") {
-  //       scrollToStudies();
-  //     }
-  //   };
-
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, []);
 
   const nextSlide = () => {
     setActiveSlide((activeSlide + 1) % data.length);

@@ -8,6 +8,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FlashLight from "@/components/FlashLight";
 import Cursor from "@/components/ui/Cursor";
+import AboutUs from "./sections/AboutUs";
 
 const LenisContext = createContext(null);
 

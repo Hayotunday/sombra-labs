@@ -4,87 +4,26 @@ import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import useStateStore from "@/stores/stateStore";
 import useNavLinksStore from "@/stores/navLinksStore";
-import useScrollStore from "@/stores/scrollStore";
 import { useLenis } from "../App";
 import CaseStudiesSection from "../sections/CaseStudiesSection";
 import AboutUs from "../sections/AboutUs";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import gsap from "gsap";
 
 export function LastSModel(props) {
   const group = useRef();
+  const sectionRefs = useRef([]);
   const { lenis } = useLenis();
   const animationsCompleted = useRef(0);
   const { nodes, materials, animations } = useGLTF("/models/LastSModel.glb");
   const { actions, mixer } = useAnimations(animations, group);
   const { step, setStep, direction } = useStateStore();
   const { setPosition } = useNavLinksStore();
-  const { scrollId, setScrollId } = useScrollStore();
+
   const [animationState, setAnimationState] = useState("idle");
 
-  const [prevScrollPos, setPrevScrollPos] = useState(window.scrollY);
-  const [scrollDirection, setScrollDirection] = useState(null);
-
-  const scrollToAbout = () => {
-    const about_us = document.getElementById("about_us");
-    about_us.click();
-  };
-  const scrollToStudies = () => {
-    const case_studies = document.getElementById("case_studies");
-    case_studies.click();
-  };
-  const scrollToTalk = () => {
-    const talk_to_us = document.getElementById("talk_to_us");
-    talk_to_us.click();
-  };
-  const scrollToSandbox = () => {
-    const sandbox = document.getElementById("sandbox_button");
-    sandbox.click();
-  };
-
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     const currentScrollPos = window.scrollY;
-  //     const direction = currentScrollPos > prevScrollPos ? "down" : "up";
-
-  //     if (scrollId == 0) {
-  //       if (direction == "down") {
-  //         scrollToStudies();
-  //         setScrollId((prevState) => prevState + 1);
-  //       }
-  //     } else if (scrollId == 1) {
-  //       if (direction == "down") {
-  //         scrollToAbout();
-  //         setScrollId((prevState) => prevState + 1);
-  //       } else if (direction == "up") {
-  //         scrollToSandbox();
-  //         setScrollId((prevState) => prevState - 1);
-  //       }
-  //     } else if (scrollId == 2) {
-  //       if (direction == "down") {
-  //         scrollToTalk();
-  //         setScrollId((prevState) => prevState + 1);
-  //       } else if (direction == "up") {
-  //         scrollToStudies();
-  //         setScrollId((prevState) => prevState - 1);
-  //       }
-  //     } else if (scrollId == 3) {
-  //       if (direction == "up") {
-  //         scrollToAbout();
-  //         setScrollId((prevState) => prevState - 1);
-  //       }
-  //     }
-  //     setScrollDirection(direction);
-  //     setPrevScrollPos(currentScrollPos);
-  //   };
-  //   // 3123
-  //   // 5412
-  //   // 7760
-  //   console.log("scrollId:", scrollId);
-
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, []);
+  gsap.registerPlugin(ScrollTrigger);
 
   const handleAnimationEnd = () => {
     if (step !== 4) return;
@@ -137,6 +76,28 @@ export function LastSModel(props) {
     }
   }, [step, actions, direction]);
 
+  const handleScroll = () => {
+    const element = group.current;
+    if (element.scrollTop > 100) {
+      scroller.scrollTo("case-studies", {
+        duration: 800,
+        delay: 0,
+        smooth: "easeInOutQuart",
+      });
+    }
+  };
+  useEffect(() => {
+    const element = group.current;
+    if (element) {
+      element.addEventListener("scroll", handleScroll);
+    }
+    return () => {
+      if (element) {
+        element.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, []);
+
   useFrame(() => {
     if (step === 4 && group.current && actions) {
       Object.entries(actions).forEach(([name, action]) => {
@@ -168,7 +129,9 @@ export function LastSModel(props) {
     >
       <group name="Scene">
         <Html position={[2, -3, -7.824]}>
-          <CaseStudiesSection />
+          <>
+            <CaseStudiesSection />
+          </>
         </Html>
 
         <mesh
@@ -182,7 +145,9 @@ export function LastSModel(props) {
           scale={1.017}
         >
           <Html position={[7, -3.5, -7.824]}>
-            <AboutUs />
+            <>
+              <AboutUs />
+            </>
           </Html>
         </mesh>
         <mesh

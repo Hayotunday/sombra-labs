@@ -3,7 +3,6 @@ import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import useStateStore from "@/stores/stateStore";
 import useNavLinksStore from "@/stores/navLinksStore";
-import useScrollStore from "@/stores/scrollStore";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Logo from "@/components/svg/Logo";
@@ -21,8 +20,6 @@ const Navbar = ({ lenis }: NavbarProps) => {
 
   const { position, setPosition, isMovingUser, setIsMovingUser } =
     useNavLinksStore();
-
-  const { scrollId, setScrollId } = useScrollStore();
 
   const positionRef = useRef(position);
 
@@ -122,7 +119,6 @@ const Navbar = ({ lenis }: NavbarProps) => {
   const navLinks = [
     {
       name: "BEYOND",
-      id: "beyond_button",
       position: 0,
       onClick: function () {
         setScrollPosition(0);
@@ -131,12 +127,10 @@ const Navbar = ({ lenis }: NavbarProps) => {
         toggleFlash(true);
         setPosition(0);
         setDirection(1);
-        setScrollId(0);
       },
     },
     {
       name: "HOME",
-      id: "home_button",
       position: 1,
       onClick: function () {
         if (introDone) {
@@ -148,12 +142,10 @@ const Navbar = ({ lenis }: NavbarProps) => {
           setIntroDone(true);
           toggleFlash(false);
         }
-        setScrollId(0);
       },
     },
     {
       name: "SANDBOX",
-      id: "sandbox_button",
       position: 2,
       onClick: function () {
         navigationHandler(this.position).then(() => {
@@ -162,12 +154,10 @@ const Navbar = ({ lenis }: NavbarProps) => {
             behavior: "smooth",
           });
         });
-        setScrollId(0);
       },
     },
     {
       name: "STUDIES",
-      id: "case_studies",
       position: 4,
       onClick: function () {
         navigationHandler(this.position).then(() => {
@@ -186,12 +176,10 @@ const Navbar = ({ lenis }: NavbarProps) => {
             behavior: "smooth",
           });
         });
-        setScrollId(1);
       },
     },
     {
       name: "ABOUT",
-      id: "about_us",
       position: 4,
       onClick: function () {
         navigationHandler(this.position).then(() => {
@@ -210,12 +198,10 @@ const Navbar = ({ lenis }: NavbarProps) => {
             behavior: "smooth",
           });
         });
-        setScrollId(2);
       },
     },
     {
       name: "TALK TO US",
-      id: "talk_to_us",
       position: 4,
       onClick: function () {
         navigationHandler(this.position).then(() => {
@@ -224,7 +210,6 @@ const Navbar = ({ lenis }: NavbarProps) => {
             behavior: "smooth",
           });
         });
-        setScrollId(3);
       },
     },
   ];
@@ -517,7 +502,6 @@ const Navbar = ({ lenis }: NavbarProps) => {
             <div className="flex flex-col gap-3">
               {navLinks.map((link, index) => (
                 <button
-                  id={link.id}
                   key={index}
                   onClick={() => {
                     if (!lenis.isStopped && !isMovingUser) link.onClick();

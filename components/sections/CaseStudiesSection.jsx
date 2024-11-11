@@ -6,37 +6,6 @@ import Image from "next/image";
 import useCaseStudyStore from "@/stores/caseStudyStore";
 
 const CaseStudiesSection = () => {
-  // const [prevScrollPos, setPrevScrollPos] = window.scrollY;
-
-  // const scrollToAbout = () => {
-  //   const about_us = document.getElementById("about_us");
-  //   about_us.click();
-  // };
-  // const scrollToSandbox = () => {
-  //   const sandbox = document.getElementById("sandbox_button");
-  //   sandbox.click();
-  // };
-
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     const currentScrollPos = window.scrollY;
-  //     const direction = currentScrollPos > prevScrollPos ? "down" : "up";
-
-  //     if (direction == "up") {
-  //       scrollToAbout();
-  //     } else if (direction == "down") {
-  //       scrollToSandbox();
-  //     }
-
-  //     setPrevScrollPos(currentScrollPos);
-  //   };
-
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, [prevScrollPos]);
-
   return (
     <div
       id="case-studies"
