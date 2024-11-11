@@ -1,6 +1,14 @@
 "use client";
 
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import {
+  createContext,
+  useMemo,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import useStateStore from "@/stores/stateStore";
 import Main from "@/components/Main";
 import Lenis from "@studio-freight/lenis";
@@ -102,9 +110,14 @@ export default function App() {
     );
   }
 
-  const contextValue = useMemo(() => {
-    lenis, initLenis, destroyLenis;
-  }, [lenis, initLenis, destroyLenis]);
+  const contextValue = useMemo(
+    () => ({
+      lenis,
+      initLenis,
+      destroyLenis,
+    }),
+    [lenis, initLenis, destroyLenis]
+  );
 
   return (
     <LenisContext.Provider value={contextValue}>
