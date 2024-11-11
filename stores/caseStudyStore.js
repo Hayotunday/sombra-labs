@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import caseStudies from "@/data/case-studies";
+import {caseStudies} from "@/data/case-studies";
 
 const useCaseStudyStore = create((set) => ({
   studies: caseStudies,

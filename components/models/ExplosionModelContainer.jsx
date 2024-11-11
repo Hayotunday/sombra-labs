@@ -59,7 +59,7 @@ const ExplosionModelContainer = ({ canvasIsActive, ...props }) => {
       fov = (1400 * 18) / window.innerWidth;
     }
 
-    console.log(fov);
+    // console.log(fov);
 
     camera.position.set(x, 0, 30);
     camera.fov = fov;

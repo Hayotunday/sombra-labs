@@ -97,7 +97,7 @@ const Main = () => {
 
       <GradientAnimation />
 
-      <div>
+      <section>
         <video
           className={`fixed top-0 left-0 w-full h-[100vh] -z-10 object-cover`}
           src={"/videos/bg2.mp4"}
@@ -118,10 +118,10 @@ const Main = () => {
             step === 1 ? "opacity-100" : "opacity-0"
           }`}
         />
-      </div>
+      </section>
 
       {/* This contains the model including the first one in the hero section and the explosion */}
-      <div ref={modalWrapper1} className="absolute top-0 left-0 w-full">
+      <section ref={modalWrapper1} className="absolute top-0 left-0 w-full">
         <div
           className="sticky top-0 w-full h-[100dvh] z-30"
           onClick={() => {
@@ -138,8 +138,8 @@ const Main = () => {
             <ExplosionModelContainer canvasIsActive={activeCanvas === 1} />
           </Canvas>
         </div>
-      </div>
-      {/* </> */}
+      </section>
+
       {introDone && (
         <>
           <HomeSection />
@@ -147,11 +147,11 @@ const Main = () => {
           <SelectedWorkSection />
 
           {/* This contains the second model (S Model) */}
-          <div
+          <section
             ref={modalWrapper2}
             className="absolute left-0 w-full h-[calc(1000vh+240px+240px)]"
           >
-            <div className="sticky top-0 w-full h-[100dvh]">
+            <div className="sticky top-0 w-full h-[100dvh]" id="lastsmodel">
               <Canvas className={`w-[100%] h-[100%]`}>
                 {/* <EffectComposer>
                   <Fluid showBackground={false} rainbow={true} />
@@ -160,8 +160,7 @@ const Main = () => {
                 <SModelContainer canvasIsActive={activeCanvas === 2} />
               </Canvas>
             </div>
-          </div>
-          {/* </> */}
+          </section>
 
           <div id="s-model-pieces-space" className="h-[240px]" />
           <div id="s-model-space" className="h-[240px]" />

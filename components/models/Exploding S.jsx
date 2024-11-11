@@ -13,6 +13,7 @@ import useNavLinksStore from "@/stores/navLinksStore";
 import { useLenis } from "../App";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
+import gsap from "gsap";
 
 const initPosition = [
   new THREE.Vector3(-0.163, 0.216, 0.232),
@@ -45,13 +46,34 @@ const initPosition = [
 
 export function ExplodeS({ ...props }) {
   const { lenis } = useLenis();
-  const group = useRef();
+  const groupRef = useRef();
   const { step, setStep } = useStateStore();
   const { nodes, materials } = useGLTF("/models/Exploding S.glb");
 
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   const stepRef = useRef(step);
+  const prevScrollPos = window.scrollY;
+
+  const scrollToStudies = () => {
+    const case_studies = document.getElementById("case_studies");
+    case_studies.click();
+  };
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.scrollY;
+      const direction = currentScrollPos > prevScrollPos ? "down" : "up";
+
+      if (direction == "up") {
+        scrollToStudies();
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     stepRef.current = step;
@@ -63,6 +85,7 @@ export function ExplodeS({ ...props }) {
         trigger: "#s-model-space",
         start: "top top",
         end: "bottom top",
+
         onEnter: () => {
           if (stepRef.current === 2) {
             window.scrollTo({
@@ -88,7 +111,7 @@ export function ExplodeS({ ...props }) {
     <Physics gravity={[0, 0, 0]}>
       <group
         scale={4}
-        ref={group}
+        ref={groupRef}
         {...props}
         dispose={null}
         rotation={[0, Math.PI, 0]}

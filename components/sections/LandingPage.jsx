@@ -8,7 +8,7 @@ const LandingPage = () => {
   const { setIntroDone, toggleFlash, introDone, setStep } = useStateStore();
 
   return (
-    <div
+    <section
       className={`w-full h-[100dvh] flex items-center justify-center transition-colors duration-[2000ms] ${
         introDone ? "hidden" : "block"
       }`}
@@ -44,7 +44,7 @@ const LandingPage = () => {
           <p className="text-[24px]">ILLUMINATE</p>
         </button>
       </div>
-    </div>
+    </section>
   );
 };
 

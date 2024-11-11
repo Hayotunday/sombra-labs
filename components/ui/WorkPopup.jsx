@@ -4,81 +4,76 @@ import React, { useEffect, useRef, useState } from "react";
 import { useLenis } from "../App";
 
 const WorkPopup = ({ work, activePopup, setActivePopup, totalPopups }) => {
-  const [activeVideo, setActiveVideo] = useState(0);
+  {
+    const [activeVideo, setActiveVideo] = useState(0);
+    const { initLenis, destroyLenis } = useLenis();
+    const wrapperRef = useRef();
+    const containerRef = useRef();
+    const isMobile = window.innerWidth < 768;
 
-  const { initLenis, destroyLenis } = useLenis();
+    useEffect(() => {
+      destroyLenis();
+      document.body.style.overflow = "hidden";
+      return () => {
+        initLenis();
+        document.body.style.overflow = "auto";
+      };
+    }, []);
 
-  const wrapper = useRef();
-  const container = useRef();
+    const [isAnimating, setIsAnimating] = useState(false);
+    const ease = "cubic-bezier(0.165, 0.84, 0.44, 1)";
 
-  useEffect(() => {
-    destroyLenis();
-    document.body.style.overflow = "hidden";
+    useEffect(() => {
+      setActiveVideo(0);
+    }, [activePopup]);
 
-    return () => {
-      initLenis();
-      document.body.style.overflow = "auto";
+    const runOpeningAnimation = () => {
+      setIsAnimating(true);
+      gsap.set(wrapperRef.current, { scaleY: 0.005, scaleX: 0 });
+      gsap.set(containerRef.current, { scale: 0 });
+      gsap
+        .timeline()
+        .to(wrapperRef.current, { scaleY: 0.005, scaleX: 1, ease })
+        .to(wrapperRef.current, { scaleY: 1, ease })
+        .to(
+          containerRef.current,
+          { scale: 1, ease, onComplete: () => setIsAnimating(false) },
+          "-=0.2"
+        );
     };
-  }, []);
 
-  const [isAnimating, setIsAnimating] = useState(false);
-
-  const ease = "cubic-bezier(0.165, 0.84, 0.44, 1)";
-
-  useEffect(() => {
-    setActiveVideo(0);
-  }, [activePopup]);
-
-  const runOpeningAnimation = () => {
-    setIsAnimating(true);
-
-    gsap.set(wrapper.current, { scaleY: 0.005, scaleX: 0 });
-    gsap.set(container.current, { scale: 0 });
-
-    const openingTl = gsap.timeline();
-
-    openingTl
-      .to(wrapper.current, { scaleY: 0.005, scaleX: 1, ease })
-      .to(wrapper.current, { scaleY: 1, ease })
-      .to(
-        container.current,
-        { scale: 1, ease, onComplete: () => setIsAnimating(false) },
-        "-=0.2"
+    const runClosingAnimation = () => {
+      if (isAnimating) return;
+      setIsAnimating(true);
+      gsap
+        .timeline()
+        .to(containerRef.current, { scale: 0, ease })
+        .to(wrapperRef.current, { scaleY: 0.005, scaleX: 1, ease }, "-=0.2")
+        .to(wrapperRef.current, {
+          scaleX: 0,
+          ease,
+          onComplete: () => {
+            setIsAnimating(false);
+            setActivePopup(null);
+          },
+        });
+    };
+    useEffect(runOpeningAnimation, []);
+    const nextVideo = () => {
+      setActiveVideo((prev) =>
+        prev === work.videos.length - 1 ? 0 : prev + 1
       );
-  };
-
-  const runClosingAnimation = () => {
-    if (isAnimating) return;
-    setIsAnimating(true);
-
-    const closingTl = gsap.timeline();
-
-    closingTl
-      .to(container.current, { scale: 0, ease })
-      .to(wrapper.current, { scaleY: 0.005, scaleX: 1, ease }, "-=0.2")
-      .to(wrapper.current, {
-        scaleX: 0,
-        ease,
-        onComplete: () => {
-          setIsAnimating(false);
-          setActivePopup(null);
-        },
-      });
-  };
-
-  useEffect(runOpeningAnimation, []);
-
-  const nextVideo = () => {
-    setActiveVideo((prev) => (prev === work.videos.length - 1 ? 0 : prev + 1));
-  };
-
-  const prevVideo = () => {
-    setActiveVideo((prev) => (prev === 0 ? work.videos.length - 1 : prev - 1));
-  };
+    };
+    const prevVideo = () => {
+      setActiveVideo((prev) =>
+        prev === 0 ? work.videos.length - 1 : prev - 1
+      );
+    };
+  }
 
   return (
     <div
-      ref={wrapper}
+      ref={wrapperRef}
       className={`fixed inset-0 isolate z-[53] flex justify-center items-center lg:pt-[30px] ${
         isAnimating ? "[&_*]:!select-none" : ""
       }`}
@@ -91,7 +86,7 @@ const WorkPopup = ({ work, activePopup, setActivePopup, totalPopups }) => {
       ></div>
 
       <div
-        ref={container}
+        ref={containerRef}
         className="relative bg-black z-10 text-white flex rounded-[30px] sm:rounded-[50px] lg:rounded-[80px] isolate max-h-[90vh] lg:h-[70vh] w-[90%] lg:w-auto max-w-[700px] lg:max-w-[90%] overflow-auto lg:overflow-visible min-h-[500px]"
       >
         <NavigationControls

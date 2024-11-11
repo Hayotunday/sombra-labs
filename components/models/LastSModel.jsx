@@ -4,6 +4,7 @@ import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import useStateStore from "@/stores/stateStore";
 import useNavLinksStore from "@/stores/navLinksStore";
+import useScrollStore from "@/stores/scrollStore";
 import { useLenis } from "../App";
 import CaseStudiesSection from "../sections/CaseStudiesSection";
 import AboutUs from "../sections/AboutUs";
@@ -16,8 +17,74 @@ export function LastSModel(props) {
   const { actions, mixer } = useAnimations(animations, group);
   const { step, setStep, direction } = useStateStore();
   const { setPosition } = useNavLinksStore();
-
+  const { scrollId, setScrollId } = useScrollStore();
   const [animationState, setAnimationState] = useState("idle");
+
+  const [prevScrollPos, setPrevScrollPos] = useState(window.scrollY);
+  const [scrollDirection, setScrollDirection] = useState(null);
+
+  const scrollToAbout = () => {
+    const about_us = document.getElementById("about_us");
+    about_us.click();
+  };
+  const scrollToStudies = () => {
+    const case_studies = document.getElementById("case_studies");
+    case_studies.click();
+  };
+  const scrollToTalk = () => {
+    const talk_to_us = document.getElementById("talk_to_us");
+    talk_to_us.click();
+  };
+  const scrollToSandbox = () => {
+    const sandbox = document.getElementById("sandbox_button");
+    sandbox.click();
+  };
+
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     const currentScrollPos = window.scrollY;
+  //     const direction = currentScrollPos > prevScrollPos ? "down" : "up";
+
+  //     if (scrollId == 0) {
+  //       if (direction == "down") {
+  //         scrollToStudies();
+  //         setScrollId((prevState) => prevState + 1);
+  //       }
+  //     } else if (scrollId == 1) {
+  //       if (direction == "down") {
+  //         scrollToAbout();
+  //         setScrollId((prevState) => prevState + 1);
+  //       } else if (direction == "up") {
+  //         scrollToSandbox();
+  //         setScrollId((prevState) => prevState - 1);
+  //       }
+  //     } else if (scrollId == 2) {
+  //       if (direction == "down") {
+  //         scrollToTalk();
+  //         setScrollId((prevState) => prevState + 1);
+  //       } else if (direction == "up") {
+  //         scrollToStudies();
+  //         setScrollId((prevState) => prevState - 1);
+  //       }
+  //     } else if (scrollId == 3) {
+  //       if (direction == "up") {
+  //         scrollToAbout();
+  //         setScrollId((prevState) => prevState - 1);
+  //       }
+  //     }
+  //     setScrollDirection(direction);
+  //     setPrevScrollPos(currentScrollPos);
+  //   };
+  //   // 3123
+  //   // 5412
+  //   // 7760
+  //   console.log("scrollId:", scrollId);
+
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, []);
 
   const handleAnimationEnd = () => {
     if (step !== 4) return;

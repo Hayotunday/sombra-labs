@@ -1,59 +1,37 @@
 import Image from "next/image";
-import React, { useState } from "react";
-
-const data = [
-  {
-    title: "ABOUT",
-    content: [
-      {
-        type: "paragraph",
-        value: [
-          { style: "normal", value: "Sombra Labs is a Creative" },
-          { style: "highlight", value: "Technology studio" },
-          {
-            style: "normal",
-            value:
-              "at the forefront of immersive digital experiences, Web 3 ecosystems, and bespoke AI pipelines all powered by Future-Driven Production technologies",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    title: "TEAM",
-    content: [
-      {
-        type: "paragraph",
-        value: [
-          {
-            style: "normal",
-            value:
-              "We are creative technologists focused on developing workflows and solutions for VFX, Machine Learning, Interactive,  Immersive, Gaming, & Web 3.",
-          },
-        ],
-      },
-      { type: "button", value: "MEET US" },
-    ],
-  },
-  {
-    title: "WORKING WITH US",
-    content: [
-      {
-        type: "paragraph",
-        value: [
-          {
-            style: "normal",
-            value:
-              "We offer simple solutions for complex problems, always striving to partner over preach. Our clients are our friends and we walk with them hand in hand from start to finish. Always open, always available.",
-          },
-        ],
-      },
-    ],
-  },
-];
+import React, { useEffect, useState } from "react";
+import { aboutData as data } from "@/data/case-studies";
 
 const AboutUs = () => {
-  const [activeSlide, setActiveSlide] = useState(0);
+  // const [activeSlide, setActiveSlide] = useState(0);
+
+  // const prevScrollPos = window.scrollY;
+
+  // const scrollToStudies = () => {
+  //   const case_studies = document.getElementById("case_studies");
+  //   case_studies.click();
+  // };
+  // const scrollToTalk = () => {
+  //   const talk_to_us = document.getElementById("talk_to_us");
+  //   talk_to_us.click();
+  // };
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     const currentScrollPos = window.scrollY;
+  //     const direction = currentScrollPos > prevScrollPos ? "down" : "up";
+
+  //     if (direction == "up") {
+  //       scrollToTalk();
+  //     } else if (direction == "down") {
+  //       scrollToStudies();
+  //     }
+  //   };
+
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, []);
 
   const nextSlide = () => {
     setActiveSlide((activeSlide + 1) % data.length);
@@ -64,7 +42,10 @@ const AboutUs = () => {
   };
 
   return (
-    <div className="w-[100vw] min-h-[100dvh] flex flex-col items-center justify-center gap-14">
+    <div
+      id="about-us"
+      className="w-[100vw] min-h-[100dvh] flex flex-col items-center justify-center gap-14"
+    >
       <h2 className="text-[32px] xs:text-[36px] sm:text-[42px] md:text-[50px] 2xl:text-[60px] leading-[1] font-bold max-w-[700px] text-center w-[90%]">
         TECHNOLOGY OUT OF THE SHADOWS
       </h2>

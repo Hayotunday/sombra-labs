@@ -8,6 +8,8 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useLenis } from "../App";
 import { ScrollTrigger } from "gsap/all";
+import { Html } from "@react-three/drei";
+import useScrollStore from "@/stores/scrollStore";
 
 const SModelContainer = ({ canvasIsActive }) => {
   let camera = useThree((state) => state.camera);
@@ -15,6 +17,11 @@ const SModelContainer = ({ canvasIsActive }) => {
   const { lenis } = useLenis();
 
   const { step, setStep } = useStateStore();
+  const { setScrollId } = useScrollStore();
+
+  useEffect(() => {
+    setScrollId(0);
+  }, []);
 
   const handleResize = () => {
     const isMedium = window.innerWidth < 1280;
@@ -147,6 +154,7 @@ const SModelContainer = ({ canvasIsActive }) => {
   return (
     <>
       {canvasIsActive && <ExplodeS />}
+
       {canvasIsActive && [4, 5].includes(step) && <LastSModel />}
     </>
   );
