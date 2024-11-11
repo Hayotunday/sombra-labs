@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { aboutData as data } from "@/data/case-studies";
 
 const AboutUs = () => {
-  // const [activeSlide, setActiveSlide] = useState(0);
+  const [activeSlide, setActiveSlide] = useState(0);
 
   // const prevScrollPos = window.scrollY;
 
