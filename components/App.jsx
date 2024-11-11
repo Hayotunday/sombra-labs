@@ -1,14 +1,6 @@
 "use client";
 
-import {
-  createContext,
-  useMemo,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import useStateStore from "@/stores/stateStore";
 import Main from "@/components/Main";
 import Lenis from "@studio-freight/lenis";
@@ -26,33 +18,33 @@ export default function App() {
     new Lenis({
       touchInertiaMultiplier: 1,
       syncTouch: true,
-      lerp: 0.1,
     })
   );
+
   const { introDone, setDirection } = useStateStore();
 
-  const initLenis = useCallback(() => {
-    const lenisInstance = new Lenis({
+  const initLenis = () => {
+    const lenis = new Lenis({
       touchInertiaMultiplier: 1,
       syncTouch: true,
-      lerp: 0.1,
     });
-    setLenis(lenisInstance);
+
+    setLenis(lenis);
 
     function raf(time) {
-      lenisInstance.raf(time);
+      lenis.raf(time);
       requestAnimationFrame(raf);
     }
 
     requestAnimationFrame(raf);
-  }, []);
+  };
 
-  const destroyLenis = useCallback(() => {
+  const destroyLenis = () => {
     if (lenis) {
       lenis.destroy();
       setLenis(null);
     }
-  }, []);
+  };
 
   useEffect(initLenis, []);
 
@@ -76,14 +68,14 @@ export default function App() {
   };
 
   useEffect(() => {
-    globalThis?.window?.addEventListener("wheel", handleWheel);
-    globalThis?.window?.addEventListener("touchstart", handleTouchStart);
-    globalThis?.window?.addEventListener("touchmove", handleTouchMove);
+    window.addEventListener("wheel", handleWheel);
+    window.addEventListener("touchstart", handleTouchStart);
+    window.addEventListener("touchmove", handleTouchMove);
 
     return () => {
-      globalThis?.window?.removeEventListener("wheel", handleWheel);
-      globalThis?.window?.removeEventListener("touchstart", handleTouchStart);
-      globalThis?.window?.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
     };
   }, []);
 
@@ -94,34 +86,26 @@ export default function App() {
   };
 
   useEffect(() => {
-    globalThis?.window?.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
     return () => {
-      globalThis?.window?.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
 
   function isTouchDevice() {
-    if (typeof globalThis?.window === "undefined") return false;
+    if (typeof window === "undefined") return false;
 
     return (
-      "ontouchstart" in globalThis?.window ||
+      "ontouchstart" in window ||
       navigator.maxTouchPoints > 0 ||
       navigator.msMaxTouchPoints > 0
     );
   }
 
-  const contextValue = useMemo(
-    () => ({
-      lenis,
-      initLenis,
-      destroyLenis,
-    }),
-    [lenis, initLenis, destroyLenis]
-  );
-
   return (
-    <LenisContext.Provider value={contextValue}>
+    <LenisContext.Provider value={{ lenis, initLenis, destroyLenis }}>
       {!isTouchDevice() && <Cursor />}
+
       <Navbar lenis={lenis} />
       <Main />
       <FlashLight />
