@@ -68,14 +68,14 @@ export default function App() {
   };
 
   useEffect(() => {
-    window.addEventListener("wheel", handleWheel);
-    window.addEventListener("touchstart", handleTouchStart);
-    window.addEventListener("touchmove", handleTouchMove);
+    globalThis?.window?.addEventListener("wheel", handleWheel);
+    globalThis?.window?.addEventListener("touchstart", handleTouchStart);
+    globalThis?.window?.addEventListener("touchmove", handleTouchMove);
 
     return () => {
-      window.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchmove", handleTouchMove);
+      globalThis?.window?.removeEventListener("wheel", handleWheel);
+      globalThis?.window?.removeEventListener("touchstart", handleTouchStart);
+      globalThis?.window?.removeEventListener("touchmove", handleTouchMove);
     };
   }, []);
 
@@ -86,17 +86,17 @@ export default function App() {
   };
 
   useEffect(() => {
-    window.addEventListener("keydown", handleKeyDown);
+    globalThis?.window?.addEventListener("keydown", handleKeyDown);
     return () => {
-      window.removeEventListener("keydown", handleKeyDown);
+      globalThis?.window?.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
 
   function isTouchDevice() {
-    if (typeof window === "undefined") return false;
+    if (typeof globalThis?.window === "undefined") return false;
 
     return (
-      "ontouchstart" in window ||
+      "ontouchstart" in globalThis?.window ||
       navigator.maxTouchPoints > 0 ||
       navigator.msMaxTouchPoints > 0
     );
