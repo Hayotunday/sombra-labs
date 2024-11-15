@@ -1,19 +1,21 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import useStateStore from "@/stores/stateStore";
 import { useThree } from "@react-three/fiber";
 import { ExplodeS } from "@/components/models/Exploding S";
 import { LastSModel } from "@/components/models/LastSModel";
+import Scroller from "@/components/Scroller";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useLenis } from "../App";
 import { ScrollTrigger } from "gsap/all";
+import { Html } from "@react-three/drei";
+import { scrollToStudies } from "@/functions";
 
 const SModelContainer = ({ canvasIsActive }) => {
   let camera = useThree((state) => state.camera);
   const cameraRef = useRef(camera);
   const { lenis } = useLenis();
-
   const { step, setStep } = useStateStore();
 
   const handleResize = () => {
@@ -143,43 +145,6 @@ const SModelContainer = ({ canvasIsActive }) => {
     },
     { dependencies: [], revertOnUpdate: true }
   );
-
-  useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
-    ScrollTrigger.scrollerProxy(document.body, {
-      scrollTop(value) {
-        return arguments.length
-          ? lenis.current.scrollTo(value)
-          : lenis.current.scroll.instance.scroll.y;
-      },
-      getBoundingClientRect() {
-        return {
-          top: 0,
-          left: 0,
-          width: window.innerWidth,
-          height: window.innerHeight,
-        };
-      },
-    });
-
-    ScrollTrigger.defaults({
-      scroller: document.body,
-    });
-
-    gsap.to("#case-studies", {
-      scrollTrigger: {
-        trigger: "#exploding-s",
-        start: "top center",
-        end: "bottom center",
-        scrub: true,
-      },
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      ease: "power4.out",
-    });
-  }, []);
 
   return (
     <>

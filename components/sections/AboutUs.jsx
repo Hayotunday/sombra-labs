@@ -14,10 +14,7 @@ const AboutUs = () => {
   };
 
   return (
-    <div
-      id="about-us"
-      className="w-[100vw] min-h-[100dvh] flex flex-col items-center justify-center gap-14"
-    >
+    <div className="w-[100vw] min-h-[100dvh] flex flex-col items-center justify-center gap-14">
       <h2 className="text-[32px] xs:text-[36px] sm:text-[42px] md:text-[50px] 2xl:text-[60px] leading-[1] font-bold max-w-[700px] text-center w-[90%]">
         TECHNOLOGY OUT OF THE SHADOWS
       </h2>

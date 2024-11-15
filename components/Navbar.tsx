@@ -3,10 +3,12 @@ import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import useStateStore from "@/stores/stateStore";
 import useNavLinksStore from "@/stores/navLinksStore";
+import useScrollStore from "@/stores/scrollStore";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Logo from "@/components/svg/Logo";
 import Lenis from "@studio-freight/lenis/types";
+import { globalAgent } from "http";
 
 interface NavbarProps {
   lenis: Lenis;
@@ -20,6 +22,8 @@ const Navbar = ({ lenis }: NavbarProps) => {
 
   const { position, setPosition, isMovingUser, setIsMovingUser } =
     useNavLinksStore();
+
+  const { scrollId, setScrollId } = useScrollStore();
 
   const positionRef = useRef(position);
 
@@ -127,6 +131,7 @@ const Navbar = ({ lenis }: NavbarProps) => {
         toggleFlash(true);
         setPosition(0);
         setDirection(1);
+        setScrollId(0);
       },
     },
     {
@@ -142,11 +147,13 @@ const Navbar = ({ lenis }: NavbarProps) => {
           setIntroDone(true);
           toggleFlash(false);
         }
+        setScrollId(0);
       },
     },
     {
       name: "SANDBOX",
       position: 2,
+      id: "sandbox_button",
       onClick: function () {
         navigationHandler(this.position).then(() => {
           window.scrollTo({
@@ -154,11 +161,13 @@ const Navbar = ({ lenis }: NavbarProps) => {
             behavior: "smooth",
           });
         });
+        setScrollId(0);
       },
     },
     {
       name: "STUDIES",
       position: 4,
+      id: "case_studies",
       onClick: function () {
         navigationHandler(this.position).then(() => {
           const spreadModelSpace = document.getElementById(
@@ -176,11 +185,13 @@ const Navbar = ({ lenis }: NavbarProps) => {
             behavior: "smooth",
           });
         });
+        setScrollId(1);
       },
     },
     {
       name: "ABOUT",
       position: 4,
+      id: "about_us",
       onClick: function () {
         navigationHandler(this.position).then(() => {
           const spreadModelSpace = document.getElementById(
@@ -198,11 +209,13 @@ const Navbar = ({ lenis }: NavbarProps) => {
             behavior: "smooth",
           });
         });
+        setScrollId(2);
       },
     },
     {
       name: "TALK TO US",
       position: 4,
+      id: "talk_to_us",
       onClick: function () {
         navigationHandler(this.position).then(() => {
           window.scrollTo({
@@ -210,6 +223,7 @@ const Navbar = ({ lenis }: NavbarProps) => {
             behavior: "smooth",
           });
         });
+        setScrollId(3);
       },
     },
   ];
@@ -503,6 +517,7 @@ const Navbar = ({ lenis }: NavbarProps) => {
               {navLinks.map((link, index) => (
                 <button
                   key={index}
+                  id={link?.id}
                   onClick={() => {
                     if (!lenis.isStopped && !isMovingUser) link.onClick();
                   }}

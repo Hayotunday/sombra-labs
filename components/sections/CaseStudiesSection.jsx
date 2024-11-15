@@ -8,7 +8,6 @@ import useCaseStudyStore from "@/stores/caseStudyStore";
 const CaseStudiesSection = () => {
   return (
     <div
-      id="case-studies"
       className={`min-h-[100dvh] w-[100dvw] flex flex-col items-center justify-center px-10 sm:px-14 gap-y-8 lg:gap-y-4 2xl:gap-y-0 relative`}
     >
       <h2 className="text-[34px] xs:text-[40px] sm:text-[48px] md:text-[60px] 2xl:text-[72px] leading-[1] font-bold">

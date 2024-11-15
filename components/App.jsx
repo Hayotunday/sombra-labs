@@ -1,6 +1,13 @@
 "use client";
 
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import useStateStore from "@/stores/stateStore";
 import Main from "@/components/Main";
 import Lenis from "@studio-freight/lenis";
@@ -8,7 +15,6 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FlashLight from "@/components/FlashLight";
 import Cursor from "@/components/ui/Cursor";
-import AboutUs from "./sections/AboutUs";
 
 const LenisContext = createContext(null);
 
@@ -47,7 +53,9 @@ export default function App() {
     }
   };
 
-  useEffect(initLenis, []);
+  useEffect(() => {
+    initLenis();
+  }, []);
 
   // Responsible for setting the direction of the scroll
   const touchStartY = useRef(0);
@@ -69,15 +77,17 @@ export default function App() {
   };
 
   useEffect(() => {
-    window.addEventListener("wheel", handleWheel);
-    window.addEventListener("touchstart", handleTouchStart);
-    window.addEventListener("touchmove", handleTouchMove);
+    if (typeof globalThis?.window !== "undefined") {
+      globalThis?.window?.addEventListener("wheel", handleWheel);
+      globalThis?.window?.addEventListener("touchstart", handleTouchStart);
+      globalThis?.window?.addEventListener("touchmove", handleTouchMove);
 
-    return () => {
-      window.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchmove", handleTouchMove);
-    };
+      return () => {
+        globalThis?.window?.removeEventListener("wheel", handleWheel);
+        globalThis?.window?.removeEventListener("touchstart", handleTouchStart);
+        globalThis?.window?.removeEventListener("touchmove", handleTouchMove);
+      };
+    }
   }, []);
 
   const handleKeyDown = (e) => {
@@ -87,17 +97,19 @@ export default function App() {
   };
 
   useEffect(() => {
-    window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
+    if (typeof globalThis?.window !== "undefined") {
+      globalThis?.window?.addEventListener("keydown", handleKeyDown);
+      return () => {
+        globalThis?.window?.removeEventListener("keydown", handleKeyDown);
+      };
+    }
   }, []);
 
   function isTouchDevice() {
-    if (typeof window === "undefined") return false;
+    if (typeof globalThis?.window === "undefined") return false;
 
     return (
-      "ontouchstart" in window ||
+      "ontouchstart" in globalThis?.window ||
       navigator.maxTouchPoints > 0 ||
       navigator.msMaxTouchPoints > 0
     );
@@ -105,12 +117,16 @@ export default function App() {
 
   return (
     <LenisContext.Provider value={{ lenis, initLenis, destroyLenis }}>
-      {!isTouchDevice() && <Cursor />}
+      {lenis && (
+        <>
+          {!isTouchDevice() && <Cursor />}
 
-      <Navbar lenis={lenis} />
-      <Main />
-      <FlashLight />
-      {introDone && <Footer />}
+          <Navbar lenis={lenis} />
+          <Main />
+          <FlashLight />
+          {introDone && <Footer />}
+        </>
+      )}
     </LenisContext.Provider>
   );
 }

@@ -4,7 +4,7 @@ import useStateStore from "@/stores/stateStore";
 import useCaseStudyStore from "@/stores/caseStudyStore";
 import useModelStore from "@/stores/modelStore";
 import GradientAnimation from "./GradientAnimation";
-import { Loader } from "@react-three/drei";
+import { Loader, ScrollControls } from "@react-three/drei";
 import LandingPage from "./sections/LandingPage";
 import HomeSection from "./sections/HomeSection";
 import Marquee from "./sections/Marquee";
@@ -97,7 +97,7 @@ const Main = () => {
 
       <GradientAnimation />
 
-      <section>
+      <section id="video-one">
         <video
           className={`fixed top-0 left-0 w-full h-[100vh] -z-10 object-cover`}
           src={"/videos/bg2.mp4"}
@@ -108,6 +108,7 @@ const Main = () => {
         />
 
         <video
+          id="video-two"
           ref={explosionRef}
           preload="auto"
           playsInline
@@ -151,13 +152,15 @@ const Main = () => {
             ref={modalWrapper2}
             className="absolute left-0 w-full h-[calc(1000vh+240px+240px)]"
           >
-            <div className="sticky top-0 w-full h-[100dvh]" id="lastsmodel">
+            <div id="s-component" className="sticky top-0 w-full h-[100dvh]">
               <Canvas className={`w-[100%] h-[100%]`}>
                 {/* <EffectComposer>
-                  <Fluid showBackground={false} rainbow={true} />
+                  <Fluid showBackground={false} rSainbow={true} />
                 </EffectComposer> */}
                 <Environment preset="warehouse" environmentIntensity={0.5} />
-                <SModelContainer canvasIsActive={activeCanvas === 2} />
+                <ScrollControls pages={2} damping={0.1}>
+                  <SModelContainer canvasIsActive={activeCanvas === 2} />
+                </ScrollControls>
               </Canvas>
             </div>
           </section>
