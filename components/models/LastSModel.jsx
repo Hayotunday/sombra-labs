@@ -6,7 +6,7 @@ import {
   ScrollControls,
 } from "@react-three/drei";
 import * as THREE from "three";
-import { useFrame, useThree } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
 import useStateStore from "@/stores/stateStore";
 import useNavLinksStore from "@/stores/navLinksStore";
 import { useLenis } from "../App";
@@ -40,11 +40,9 @@ export function LastSModel(props) {
     if (step !== 4) return;
 
     if (direction === -1) {
-      if (window) {
-        window.scrollTo({
-          top: document.querySelector("#s-spread-model-space").offsetTop - 50,
-        });
-      }
+      window.scrollTo({
+        top: document.querySelector("#s-spread-model-space").offsetTop - 50,
+      });
       setStep(3);
       setPosition(3);
     } else {
@@ -110,96 +108,90 @@ export function LastSModel(props) {
   });
 
   return (
-    <>
-      <group
-        rotation={[0, Math.PI, 0]}
-        ref={group}
-        {...props}
-        dispose={null}
-        scale={[
-          window.innerWidth / group.current.scale.x,
-          window.innerHeight / group.current.scale.y,
-          1,
-        ]}
-        position={new THREE.Vector3(-0.7, -1.9, 0)}
-      >
-        <group name="Scene">
-          <Html position={[2, -3, -7.824]}>
-            <div id="case-studies-section">
-              <CaseStudiesSection />
+    <group
+      rotation={[0, Math.PI, 0]}
+      ref={group}
+      {...props}
+      dispose={null}
+      scale={2.3}
+      position={new THREE.Vector3(-0.7, -1.9, 0)}
+    >
+      <group name="Scene">
+        <Html position={[2, -3, -7.824]}>
+          <div id="case-studies-section">
+            <CaseStudiesSection />
+          </div>
+        </Html>
+
+        <mesh
+          name="Cube0S_Array_02_1x1"
+          castShadow
+          receiveShadow
+          geometry={nodes.Cube0S_Array_02_1x1.geometry}
+          material={materials["Website  Glass Material"]}
+          position={[11.919, -5.304, -7.824]}
+          rotation={[-3.008, 1.303, 2.999]}
+          scale={1.017}
+        >
+          <Html position={[7, -3.5, -7.824]}>
+            <div id="about-us-section">
+              <AboutUs />
             </div>
           </Html>
-
-          <mesh
-            name="Cube0S_Array_02_1x1"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cube0S_Array_02_1x1.geometry}
-            material={materials["Website  Glass Material"]}
-            position={[11.919, -5.304, -7.824]}
-            rotation={[-3.008, 1.303, 2.999]}
-            scale={1.017}
-          >
-            <Html position={[7, -3.5, -7.824]}>
-              <div id="about-us-section">
-                <AboutUs />
-              </div>
-            </Html>
-          </mesh>
-          <mesh
-            name="Logo_3D007"
-            castShadow
-            receiveShadow
-            geometry={nodes.Logo_3D007.geometry}
-            material={materials["Website  Glass Material"]}
-          />
-          <mesh
-            name="Logo_3D008"
-            castShadow
-            receiveShadow
-            geometry={nodes.Logo_3D008.geometry}
-            material={materials["Website  Glass Material"]}
-          />
-          <mesh
-            name="Logo_3D009"
-            castShadow
-            receiveShadow
-            geometry={nodes.Logo_3D009.geometry}
-            material={materials["Website  Glass Material"]}
-          />
-          <mesh
-            name="Logo_3D010"
-            castShadow
-            receiveShadow
-            geometry={nodes.Logo_3D010.geometry}
-            material={materials["Website  Glass Material"]}
-          />
-          <mesh
-            name="Logo_3D011"
-            castShadow
-            receiveShadow
-            geometry={nodes.Logo_3D011.geometry}
-            material={materials["Website  Glass Material"]}
-          />
-          <mesh
-            name="Logo_3D012"
-            castShadow
-            receiveShadow
-            geometry={nodes.Logo_3D012.geometry}
-            material={materials["Website  Glass Material"]}
-          />
-          <mesh
-            name="Logo_3D_005001"
-            castShadow
-            receiveShadow
-            geometry={nodes.Logo_3D_005001.geometry}
-            material={materials["Website  Glass Material"]}
-            morphTargetDictionary={nodes.Logo_3D_005001.morphTargetDictionary}
-            morphTargetInfluences={nodes.Logo_3D_005001.morphTargetInfluences}
-          />
-        </group>
+        </mesh>
+        <mesh
+          name="Logo_3D007"
+          castShadow
+          receiveShadow
+          geometry={nodes.Logo_3D007.geometry}
+          material={materials["Website  Glass Material"]}
+        />
+        <mesh
+          name="Logo_3D008"
+          castShadow
+          receiveShadow
+          geometry={nodes.Logo_3D008.geometry}
+          material={materials["Website  Glass Material"]}
+        />
+        <mesh
+          name="Logo_3D009"
+          castShadow
+          receiveShadow
+          geometry={nodes.Logo_3D009.geometry}
+          material={materials["Website  Glass Material"]}
+        />
+        <mesh
+          name="Logo_3D010"
+          castShadow
+          receiveShadow
+          geometry={nodes.Logo_3D010.geometry}
+          material={materials["Website  Glass Material"]}
+        />
+        <mesh
+          name="Logo_3D011"
+          castShadow
+          receiveShadow
+          geometry={nodes.Logo_3D011.geometry}
+          material={materials["Website  Glass Material"]}
+        />
+        <mesh
+          name="Logo_3D012"
+          castShadow
+          receiveShadow
+          geometry={nodes.Logo_3D012.geometry}
+          material={materials["Website  Glass Material"]}
+        />
+        <mesh
+          name="Logo_3D_005001"
+          castShadow
+          receiveShadow
+          geometry={nodes.Logo_3D_005001.geometry}
+          material={materials["Website  Glass Material"]}
+          morphTargetDictionary={nodes.Logo_3D_005001.morphTargetDictionary}
+          morphTargetInfluences={nodes.Logo_3D_005001.morphTargetInfluences}
+        />
       </group>
-    </>
+    </group>
   );
 }
 
